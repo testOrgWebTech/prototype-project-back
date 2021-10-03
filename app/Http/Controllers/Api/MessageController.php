@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class PostController extends Controller
+class MessageController extends Controller
 {
+
+//    public function __construct(){
+//        $this->middleware('auth:api');
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Message::get();
     }
 
     /**
@@ -36,13 +32,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new Post();
-        //$post = $request->message;
-        $post->save();
-        /*return redirect()->route('apartments.show', [
-            'apartment' => $room->apartment_id
-        ]);*/
-        return ;
+        //
     }
 
     /**
@@ -57,17 +47,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -76,11 +55,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
-        //set value
-        //$post->name = $request->input('name');
-        $post->save();
-        return ;
+        //
     }
 
     /**
@@ -91,7 +66,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
+        //
     }
 }

@@ -15,7 +15,13 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class,'sender_id');
+            $table->foreignIdFor(\App\Models\User::class,'receiver_id');
+            $table->text('message');
+//            $table->string('imgPath')->nullable();
+//            $table->smallInteger('status');
             $table->timestamps();
+
         });
     }
 
