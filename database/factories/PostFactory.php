@@ -22,7 +22,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'message' => $this->faker->paragraph()
         ];
     }
 }
