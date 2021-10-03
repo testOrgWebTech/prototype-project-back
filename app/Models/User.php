@@ -13,6 +13,14 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function isRole($role) {
+        return $this->role === $role;
+    }
+
+    public function isReferee() {
+        return $this->isRole('REFEREE');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
