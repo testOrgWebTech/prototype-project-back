@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->text('message');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreignIdFor(\App\Models\User::class);
         });
     }
 
