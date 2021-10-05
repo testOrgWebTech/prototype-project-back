@@ -25,6 +25,8 @@ Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class);
 
 Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
 
+Route::apiResource('teams',\App\Http\Controllers\Api\TeamController::class);
+
 Route::group([
     'middleware' => 'api', 'prefix' => 'auth'
 ], function ($router) {
