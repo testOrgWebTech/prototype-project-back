@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Comment;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CommentFactory extends Factory
+class MessageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Comment::class;
+    protected $model = Message::class;
 
     /**
      * Define the model's default state.
