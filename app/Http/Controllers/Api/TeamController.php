@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TeamController extends Controller
 {
@@ -27,8 +28,20 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
         $team = new Team();
+        $team->name = $request->input('name');
         $team->save();
+
+        $userId = $request->input('user_id');
+        $team->users()->attach($userId);
     }
 
     /**

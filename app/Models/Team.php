@@ -10,14 +10,19 @@ class Team extends Model
 {
     use HasFactory;
 
-    protected $appends = ['user_names'];
+    protected $appends = ['users_id','users_name'];
 
     public function users(){
         return $this->belongsToMany(User::class)
             ->withTimestamps();
     }
 
-    public function getUserNamesAttribute(){
+    public  function  getUsersIdAttribute(){
+        return implode(",",$this->users->pluck('id')->all());
+    }
+    public function getUsersNameAttribute(){
         return implode(",",$this->users->pluck('name')->all());
     }
+
+
 }
