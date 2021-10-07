@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,7 @@ class TeamController extends Controller
             'name' => 'required|string|between:2,100',
 
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -55,6 +56,22 @@ class TeamController extends Controller
         return $team;
     }
 
+    public function updateMembers($team, $usersWithComma)
+    {
+        if ($usersWithComma) {
+            $user_ids = [];
+            $user_names = explode(',', $usersWithComma);
+            foreach ($user_names as $name) {
+                $name = trim($name);
+                if ($name) {
+                    $user = User::where('name', 'LIKE', $name)->first();
+                    array_push($user_ids, $user->id);
+                }
+            }
+            $team->users()->syncWithoutDetaching($user_ids);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -64,7 +81,14 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $team = Team::findOrFail($team->id);
+        $team->name = $request->input('name');
+        $team->save();
+
+        $usersWithComma = trim($request->input('users'));
+        $this->updateMembers($team, $usersWithComma);
+
+        return $this->show($team);
     }
 
     /**
