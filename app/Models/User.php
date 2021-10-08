@@ -63,6 +63,8 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    protected $touches = ['teams'];
+
     public function posts() {
         return $this->hasMany(Post::class);
     }
@@ -73,5 +75,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function messages() {
         return $this->hasMany(Message::class);
+    }
+
+    public function teams(){
+        return $this->belongsToMany(Team::class)
+            ->withTimestamps();
     }
 }
