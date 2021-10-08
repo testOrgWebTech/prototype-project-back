@@ -62,19 +62,35 @@ class TeamController extends Controller
         return $team;
     }
 
-    public function updateMembers($team, $usersWithComma)
+    public function updateAddMember($team, $usersWithComma)
     {
         if ($usersWithComma) {
             $user_ids = [];
-            $user_names = explode(',', $usersWithComma);
-            foreach ($user_names as $name) {
-                $name = trim($name);
-                if ($name) {
-                    $user = User::where('name', 'LIKE', $name)->first();
+            $user_emails = explode(',', $usersWithComma);
+            foreach ($user_emails as $email) {
+                $email = trim($email);
+                if ($email) {
+                    $user = User::where('email', 'LIKE', $email)->first();
                     array_push($user_ids, $user->id);
                 }
             }
             $team->users()->syncWithoutDetaching($user_ids);
+        }
+    }
+
+    public function updateDeleteMember($team, $usersWithComma)
+    {
+        if ($usersWithComma) {
+            $user_ids = [];
+            $user_emails = explode(',', $usersWithComma);
+            foreach ($user_emails as $email) {
+                $email = trim($email);
+                if ($email) {
+                    $user = User::where('email', 'LIKE', $email)->first();
+                    array_push($user_ids, $user->id);
+                }
+            }
+            $team->users()->detach($user_ids);
         }
     }
 
@@ -92,7 +108,11 @@ class TeamController extends Controller
         $team->save();
 
         $usersWithComma = trim($request->input('users'));
-        $this->updateMembers($team, $usersWithComma);
+        if (strtolower($request->input('option')) === "add") {
+            $this->updateAddMember($team, $usersWithComma);
+        } else {
+            $this->updateDeleteMember($team, $usersWithComma);
+        }
 
         return $this->show($team);
     }
