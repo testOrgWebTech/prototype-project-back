@@ -10,9 +10,9 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class MessageController extends Controller
 {
 
-//    public function __construct(){
-//        $this->middleware('auth:api');
-//    }
+    public function __construct(){
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,7 +21,9 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return Message::get();
+        $user = JWTAuth::user();
+        $message = $user->messages()->get();
+        return $message;
     }
 
     /**
