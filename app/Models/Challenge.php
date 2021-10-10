@@ -10,6 +10,8 @@ class Challenge extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $appends = ['players_id'];
+
     public function post()
     {
         return $this->belongsTo(Post::class);
@@ -17,12 +19,26 @@ class Challenge extends Model
 
     public function teamA()
     {
-        return $this->belongsTo(Team::class,'teamA_id');
+        return $this->belongsTo(Team::class, 'teamA_id');
     }
 
     public function teamB()
     {
-        return $this->belongsTo(Team::class,'teamB_id');
+        return $this->belongsTo(Team::class, 'teamB_id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('player_team')->withTimestamps();
+    }
+
+    public function players()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function getPlayersIdAttribute()
+    {
+        return implode(",", $this->players->pluck('id')->all());
+    }
 }

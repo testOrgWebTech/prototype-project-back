@@ -19,7 +19,8 @@ class CreateChallengesTable extends Migration
             $table->foreignIdFor(\App\Models\Post::class)->nullable();
             $table->foreignIdFor(\App\Models\Team::class, 'teamA_id')->nullable();
             $table->foreignIdFor(\App\Models\Team::class, 'teamB_id')->nullable();
-
+            $table->foreignIdFor(\App\Models\User::class, 'teamA_players_id')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'teamB_players_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
