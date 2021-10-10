@@ -23,14 +23,15 @@ Route::apiResource('users',\App\Http\Controllers\Api\UserController::class);
 
 Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class);
 
-Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
-
+//Message Route
 Route::group([
     'middleware' => 'api','prefix' => 'messages'
 ], function ($router)
 {
-   Route::get('getSentMessage',[\App\Http\Controllers\Api\MessageController::class,'getSentMessage']);
+    Route::get('getSentMessage',[\App\Http\Controllers\Api\MessageController::class,'getSentMessage']);
 });
+Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
+
 Route::group([
     'middleware' => 'api', 'prefix' => 'auth'
 ], function ($router) {

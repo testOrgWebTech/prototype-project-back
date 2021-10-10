@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MessageController extends Controller
@@ -30,23 +31,34 @@ class MessageController extends Controller
     public function getSentMessage(){
         $user = JWTAuth::user();
         $message = Message::get()->where('sender_id',$user->id);
+//        return $message;
         return MessageResource::collection($message);
     }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return MessageResource
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'message' => 'required|max:255',
+            'receiver' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+
         $user = JWTAuth::user();
         $message = new Message();
         $message->message = $request->input('message');
         $message->sender_id = $user->id;
         $message->receiver_id = $request->input('receiver');
         $message->save();
-        return $message;
+        return new MessageResource($message);
 
     }
 
