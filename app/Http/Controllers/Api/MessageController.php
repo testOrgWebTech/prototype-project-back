@@ -30,7 +30,7 @@ class MessageController extends Controller
     }
     public function getSentMessage(){
         $user = JWTAuth::user();
-        $message = Message::get()->where('sender_id',$user->id);
+        $message = Message::where('sender_id',$user->id)->paginate(5);
 //        return $message;
         return MessageResource::collection($message);
     }
@@ -44,7 +44,7 @@ class MessageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'message' => 'required|max:255',
-            'receiver' => 'required',
+            'receiver' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
