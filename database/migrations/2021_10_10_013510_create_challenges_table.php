@@ -16,13 +16,12 @@ class CreateChallengesTable extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->string('location')->nullable();
-            $table->foreignIdFor(\App\Models\Post::class)->nullable();
-            $table->foreignIdFor(\App\Models\Team::class, 'teamA_id')->nullable();
+            $table->foreignIdFor(\App\Models\Post::class);
+            $table->foreignIdFor(\App\Models\Team::class, 'teamA_id');
             $table->foreignIdFor(\App\Models\Team::class, 'teamB_id')->nullable();
-            $table->string('victory_team')->nullable();
-            $table->enum('match_progress', ['WAITING', 'ENDED'])->nullable();
-            //not sure about mode...
-            // $table->enum('mode', ['1V1', '5v5']); ? TEAM VS TEAM, SOLO VS SOLO?
+            $table->enum('victory_team', ['A', 'B'])->nullable();
+            $table->enum('match_progress', ['WAITING', 'ENDED'])->default('WAITING');
+            $table->enum('mode', ['1V1', '2v2', '3v3', '4v4', '5v5', '6v6', '7v7'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,7 +17,7 @@ class CreateChallengeUserTable extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Challenge::class);
             $table->foreignIdFor(\App\Models\User::class);
-            $table->string('player_team');
+            $table->enum('player_team', ['A', 'B'])->nullable();
             $table->timestamps();
         });
     }

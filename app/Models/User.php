@@ -13,7 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['challenges_id'];
+    //cant use
+    // protected $appends = ['challenges_id'];
 
     /**
      * The attributes that are mass assignable.
@@ -69,10 +70,10 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function getChallengesIdAttribute()
-    {
-        return implode(",", $this->playerChallenges->pluck('id')->all());
-    }
+    // public function getChallengesIdAttribute()
+    // {
+    //     return implode(", ", $this->playerChallenges->pluck('id')->all());
+    // }
 
     public function posts()
     {
@@ -100,8 +101,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Challenge::class)->wherePivot('player_team')->withTimestamps();
     }
 
-    public function playerChallenges()
-    {
-        return $this->belongsToMany(Challenge::class)->withTimestamps();
-    }
+    // public function playerChallenges()
+    // {
+    //     return $this->belongsToMany(Challenge::class)->withTimestamps();
+    // }
 }

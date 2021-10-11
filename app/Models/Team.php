@@ -21,12 +21,12 @@ class Team extends Model
 
     public  function  getUsersIdAttribute()
     {
-        return implode(",", $this->users->pluck('id')->all());
+        return implode(", ", $this->users->pluck('id')->all());
     }
 
     public function getUsersNameAttribute()
     {
-        return implode(",", $this->users->pluck('name')->all());
+        return implode(", ", $this->users->pluck('name')->all());
     }
 
     //get all challenge that challenge as team A
@@ -43,11 +43,11 @@ class Team extends Model
 
     public  function  getAsTeamAChallengesIdAttribute()
     {
-        return implode(",", $this->asTeamA_Challenges->pluck('id')->all());
+        return implode(", ", $this->asTeamA_Challenges->pluck('id')->all());
     }
 
     public  function  getAsTeamBChallengesIdAttribute()
     {
-        return implode(",", $this->asTeamB_Challenges->pluck('id')->all());
+        return implode(", ", $this->asTeamB_Challenges->pluck('id')->all());
     }
 }

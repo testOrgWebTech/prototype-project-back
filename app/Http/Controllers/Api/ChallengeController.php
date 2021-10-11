@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Challenge;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,9 +12,9 @@ class ChallengeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', [
-            'except' => ['show','index']
-        ]);
+        // $this->middleware('auth:api', [
+        //     'except' => ['show', 'index']
+        // ]);
     }
     /**
      * Display a listing of the resource.
@@ -34,30 +35,31 @@ class ChallengeController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'location' => 'required|string|between:2,20',
-            'post_id' => 'required|integer',
-            //mode
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+        // $validator = Validator::make($request->all(), [
+        //     'location' => 'required|string|between:2,20',
+        //     // 'post_id' => 'required|integer',
+        //     //mode
+        // ]);
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
 
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
         $challenge->post_id  = $request->input('post_id');
         $challenge->teamA_id = $request->input('teamA_id');
         $challenge->match_progress = $request->input('match_progress');
-        //$challenge->mode = $request->input('mode');
+        $challenge->mode = $request->input('mode');
         $challenge->save();
 
-        $userId = $request->input('user_id');
+        $usersEmailWithComma = trim($request->input('teamA_players'));
+        $this->updateTeamPlayers($challenge, $usersEmailWithComma, $request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Challenge  $challenge
      * @return \Illuminate\Http\Response
      */
     public function show(Challenge $challenge)
@@ -69,12 +71,23 @@ class ChallengeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Challenge  $challenge
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Challenge $challenge)
     {
-        // change mode ?
+        $challenge = Challenge::findOrFail($challenge->id);
+        $challenge->location = $request->input('location');
+        $challenge->teamB_id = $request->input('teamB_id');
+        $challenge->victory_team = $request->input('victory_team');
+        $challenge->match_progress = $request->input('match_progress');
+        $challenge->mode = $request->input('mode');
+        $challenge->save();
+
+        $usersWithComma = trim($request->input('users'));
+        $this->updateTeamPlayers($challenge, $usersWithComma, $request);
+
+        return $this->show($challenge);
     }
 
     /**
@@ -86,5 +99,25 @@ class ChallengeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateTeamPlayers($challenge, $usersEmailWithComma, $request)
+    {
+        if ($usersEmailWithComma) {
+            $user_ids = [];
+            $user_emails = explode(',', $usersEmailWithComma);
+            foreach ($user_emails as $email) {
+                $email = trim($email);
+                if ($email) {
+                    $user = User::where('email', 'LIKE', $email)->first();
+                    array_push($user_ids, $user->id);
+                }
+            }
+            if (strtolower($request->input('player_team')) === "teamA") {
+                $challenge->users()->syncWithPivotValues($user_ids, ['player_team' => 'A']);
+            } else {
+                $challenge->users()->syncWithPivotValues($user_ids, ['player_team' => 'B']);
+            }
+        }
     }
 }
