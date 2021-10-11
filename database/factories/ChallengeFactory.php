@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Message;
+use App\Models\Challenge;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MessageFactory extends Factory
+class ChallengeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Message::class;
+    protected $model = Challenge::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            'message' => $this->faker->realText(10),
+            'location' => $this->faker->colorName(),
         ];
     }
 }

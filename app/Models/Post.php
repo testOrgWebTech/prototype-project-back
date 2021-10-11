@@ -22,4 +22,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Category::class)->withTimestamps()->withPivot('active', 'created_by');
     }
+
+    public function challenge()
+    {
+        return $this->hasOne(Challenge::class);
+    }
 }
