@@ -15,6 +15,6 @@ class TeamSeeder extends Seeder
      */
     public function run()
     {
-        Team::factory(5)->create();
+        Team::factory(10)->create();
     }
 }
