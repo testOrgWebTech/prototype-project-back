@@ -15,17 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
     }
 
     /**
@@ -37,12 +27,18 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $post = new Post();
+        $post->message = $request->message;
+        $post->category = $request->category;
         //$post = $request->message;
+        //$post = $request->img;
         $post->save();
         /*return redirect()->route('apartments.show', [
             'apartment' => $room->apartment_id
         ]);*/
-        return ;
+        return response()->json([
+            'message' => 'Post successfully created',
+            'post' => $post
+        ], 200);
     }
 
     /**
@@ -53,18 +49,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $post = Post::findOrFail($id);
+        return $post;
     }
 
     /**
@@ -77,10 +63,15 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        //set value
-        //$post->name = $request->input('name');
+        $post->message = $request->message;
+        $post->category = $request->category;
+        //$post = $request->message;
+        //$post = $request->img;
         $post->save();
-        return ;
+        return response()->json([
+            'message' => 'Post successfully updated',
+            'post' => $post
+        ], 200);
     }
 
     /**

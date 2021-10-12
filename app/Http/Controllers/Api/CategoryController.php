@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,17 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Category::get();
     }
 
     /**
@@ -34,7 +25,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+
+        return response()->json([
+            'message' => 'Category successfully created',
+            'category' => $category
+        ], 200);
     }
 
     /**
@@ -45,18 +43,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $category = Category::findOrFail($id);
+        return $category;
     }
 
     /**
@@ -68,7 +56,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->save();
+        return response()->json([
+            'message' => 'Category successfully updated',
+            'category' => $category
+        ], 200);
     }
 
     /**
@@ -79,6 +73,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
     }
 }

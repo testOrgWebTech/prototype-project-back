@@ -28,6 +28,8 @@ Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class
 
 Route::apiResource('teams',\App\Http\Controllers\Api\TeamController::class);
 
+Route::apiResource('teams',\App\Http\Controllers\Api\CategoryController::class);
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
