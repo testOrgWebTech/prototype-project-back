@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::apiResource('users',\App\Http\Controllers\Api\UserController::class);
 
 Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class);
@@ -32,12 +33,15 @@ Route::group([
 });
 Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
 
+Route::apiResource('teams',\App\Http\Controllers\Api\TeamController::class);
+
 Route::group([
-    'middleware' => 'api', 'prefix' => 'auth'
+    'middleware' => 'api',
+    'prefix' => 'auth'
 ], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::post('register', [AuthController::class, 'register']);
 });
-
