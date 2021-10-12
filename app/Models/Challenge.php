@@ -10,9 +10,7 @@ class Challenge extends Model
 {
     use HasFactory, SoftDeletes;
 
-    // protected $appends = ['users_id', 'players_id'];
-    protected $appends = ['users_id'];
-    // protected $appends = ['players_id'];
+    protected $appends = ['users_id', 'teamA_players_id', 'teamB_players_id'];
 
     protected $touches = ['post', 'teamA', 'teamB', 'users'];
 
@@ -35,26 +33,35 @@ class Challenge extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)
-        ->withTimestamps();
+        return $this->belongsToMany(User::class)->withPivot('player_team')
+            ->withTimestamps();
     }
+
     public function getUsersIdAttribute()
     {
         return implode(", ", $this->users->pluck('id')->all());
     }
 
-    //use to show players_id & detach
-    // public function players()
+    // public function getPlayerTeamByUserId($user_id)
     // {
-    //     return $this->belongsToMany(User::class)->withTimestamps();
+    //     return $this->belongsToMany(User::class)->withPivot('player_team')->where('user_id', $user_id)->first()->pivot->player_team;
     // }
 
-    // public function getUsersIdAttribute()
-    // {
-    //     return implode(",", $this->pivot->player_team);
-    // }
-    // public function getPlayersIdAttribute()
-    // {
-    //     return implode(", ", $this->players->pluck('id')->all());
-    // }
+    public function teamAplayers()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('player_team', 'A')->withTimestamps();
+    }
+    public function teamBplayers()
+    {
+        return $this->belongsToMany(User::class)->wherePivot('player_team', 'B')->withTimestamps();
+    }
+
+    public function getTeamAplayersIdAttribute()
+    {
+        return implode(", ", $this->teamAplayers->pluck('id')->all());
+    }
+    public function getTeamBplayersIdAttribute()
+    {
+        return implode(", ", $this->teamBplayers->pluck('id')->all());
+    }
 }

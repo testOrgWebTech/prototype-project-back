@@ -12,9 +12,9 @@ class ChallengeController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api', [
-        //     'except' => ['show', 'index']
-        // ]);
+        $this->middleware('auth:api', [
+            'except' => ['show', 'index']
+        ]);
     }
     /**
      * Display a listing of the resource.
@@ -35,14 +35,14 @@ class ChallengeController extends Controller
      */
     public function store(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'location' => 'required|string|between:2,20',
-        //     // 'post_id' => 'required|integer',
-        //     //mode
-        // ]);
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors()->toJson(), 400);
-        // }
+        $validator = Validator::make($request->all(), [
+            'location' => 'required|string|between:2,20',
+            // 'post_id' => 'required|integer',
+            //mode
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
 
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
@@ -84,7 +84,7 @@ class ChallengeController extends Controller
         $challenge->mode = $request->input('mode');
         $challenge->save();
 
-        $usersWithComma = trim($request->input('users'));
+        $usersWithComma = trim($request->input('players'));
         $this->updateTeamPlayers($challenge, $usersWithComma, $request);
 
         return $this->show($challenge);
@@ -101,22 +101,27 @@ class ChallengeController extends Controller
         //
     }
 
+    //Many-To-Many dont have synce with pivot value that can contain array data so using attach instead lmao sadlife.
     public function updateTeamPlayers($challenge, $usersEmailWithComma, $request)
     {
         if ($usersEmailWithComma) {
-            $user_ids = [];
             $user_emails = explode(',', $usersEmailWithComma);
-            foreach ($user_emails as $email) {
-                $email = trim($email);
-                if ($email) {
-                    $user = User::where('email', 'LIKE', $email)->first();
-                    array_push($user_ids, $user->id);
+            if (strtolower($request->input('player_team')) === strtolower("teamA")) {
+                foreach ($user_emails as $email) {
+                    $email = trim($email);
+                    if ($email) {
+                        $user = User::where('email', 'LIKE', $email)->first();
+                    }
+                    $challenge->users()->attach($user->id, ['player_team' => 'A']);
                 }
-            }
-            if (strtolower($request->input('player_team')) === "teamA") {
-                $challenge->users()->syncWithPivotValues($user_ids, ['player_team' => 'A']);
             } else {
-                $challenge->users()->syncWithPivotValues($user_ids, ['player_team' => 'B']);
+                foreach ($user_emails as $email) {
+                    $email = trim($email);
+                    if ($email) {
+                        $user = User::where('email', 'LIKE', $email)->first();
+                    }
+                    $challenge->users()->attach($user->id, ['player_team' => 'B']);
+                }
             }
         }
     }
