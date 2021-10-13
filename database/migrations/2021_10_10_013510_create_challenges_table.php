@@ -19,7 +19,7 @@ class CreateChallengesTable extends Migration
             $table->foreignIdFor(\App\Models\Post::class)->nullable();
             $table->foreignIdFor(\App\Models\Team::class, 'teamA_id')->nullable();
             $table->foreignIdFor(\App\Models\Team::class, 'teamB_id')->nullable();
-            $table->string('victory_team');
+            $table->string('victory_team')->nullable();
             $table->enum('match_progress', ['WAITING', 'ENDED']);
             //not sure about mode...
             // $table->enum('mode', ['1V1', '5v5']); ? TEAM VS TEAM, SOLO VS SOLO?
