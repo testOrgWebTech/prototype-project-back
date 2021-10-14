@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Challenge;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CommentSeeder::class);
         $this->call(MessageSeeder::class);
         $this->call(TeamSeeder::class);
+        $this->call(ChallengeSeeder::class);
     }
 }
