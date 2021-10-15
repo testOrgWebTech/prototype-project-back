@@ -30,6 +30,8 @@ Route::apiResource('teams', \App\Http\Controllers\Api\TeamController::class);
 
 Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::class);
 
+Route::post('upload-image', [\App\Http\Controllers\ImageController::class, 'store']);
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
