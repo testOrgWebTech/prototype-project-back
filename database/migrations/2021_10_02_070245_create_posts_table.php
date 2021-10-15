@@ -16,11 +16,12 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             //$table->string('name');
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\Category::class);
+            $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->foreignIdFor(\App\Models\Category::class)->nullable();
+            // $table->foreignIdFor(\App\Models\Comment::class)->nullable();
         });
     }
 

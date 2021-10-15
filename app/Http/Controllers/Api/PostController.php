@@ -35,7 +35,8 @@ class PostController extends Controller
         $post->user_id = $request->user_id;
         
         $post->save();
-        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
+        // return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
+        return Post::with(['user', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**

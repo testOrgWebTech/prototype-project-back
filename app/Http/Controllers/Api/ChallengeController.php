@@ -43,6 +43,8 @@ class ChallengeController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
+        
+        
 
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
