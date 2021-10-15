@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
@@ -23,6 +24,7 @@ class CommentFactory extends Factory
     {
         return [
             'message' => $this->faker->realText(50),
+            'post_id' => Post::inRandomOrder()->first(),
         ];
     }
 }

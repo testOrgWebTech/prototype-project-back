@@ -32,6 +32,10 @@ Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::
 
 Route::post('upload-image', [\App\Http\Controllers\ImageController::class, 'store']);
 
+Route::apiResource('categories',\App\Http\Controllers\Api\CategoryController::class);
+
+Route::apiResource('comments',\App\Http\Controllers\Api\CommentController::class);
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
