@@ -20,7 +20,7 @@ class CommentSeeder extends Seeder
     {
         $posts = Post::get();
         foreach($posts as $post) {
-            Comment::factory(5)->create([
+            Comment::factory(1)->create([
                 'post_id' => $post->id,
             ]);
         }

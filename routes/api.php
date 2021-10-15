@@ -20,13 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('users',\App\Http\Controllers\Api\UserController::class);
+Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
 
 Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class);
 
-Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
+Route::apiResource('messages', \App\Http\Controllers\Api\MessageController::class);
 
-Route::apiResource('teams',\App\Http\Controllers\Api\TeamController::class);
+Route::apiResource('teams', \App\Http\Controllers\Api\TeamController::class);
+
+Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::class);
 
 Route::apiResource('teams',\App\Http\Controllers\Api\CategoryController::class);
 
