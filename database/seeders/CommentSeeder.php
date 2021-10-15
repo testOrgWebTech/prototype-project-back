@@ -2,11 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Apartment;
 use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Room;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CommentSeeder extends Seeder
@@ -18,11 +14,6 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        $posts = Post::get();
-        foreach($posts as $post) {
-            Comment::factory(1)->create([
-                'post_id' => $post->id,
-            ]);
-        }
+        Comment::factory(5)->create();
     }
 }

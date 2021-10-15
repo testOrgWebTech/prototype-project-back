@@ -11,6 +11,6 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class)->withTimestamps()->withPivot('active', 'created_by');
+        return $this->hasMany(Post::class);
     }
 }

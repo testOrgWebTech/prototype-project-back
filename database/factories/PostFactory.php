@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +24,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'message' => $this->faker->paragraph()
+            'message' => $this->faker->paragraph(),
+            'user_id' => User::inRandomOrder()->first(),
+            'category_id' => Category::inRandomOrder()->first(),
         ];
     }
 }

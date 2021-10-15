@@ -30,7 +30,9 @@ Route::apiResource('teams', \App\Http\Controllers\Api\TeamController::class);
 
 Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::class);
 
-Route::apiResource('teams',\App\Http\Controllers\Api\CategoryController::class);
+Route::apiResource('categories',\App\Http\Controllers\Api\CategoryController::class);
+
+Route::apiResource('comments',\App\Http\Controllers\Api\CommentController::class);
 
 Route::group([
     'middleware' => 'api',

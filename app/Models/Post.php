@@ -11,9 +11,8 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'post_id');
+    public function user() {
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function comments()
@@ -21,9 +20,9 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class)->withTimestamps()->withPivot('active', 'created_by');
+        return $this->belongsTo(Category::class,'category_id');
     }
 
     public function challenges()

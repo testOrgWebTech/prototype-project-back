@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
+        return Post::with(['user', 'comments', 'category'])->get();
+        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
     }
 
     /**
@@ -28,17 +31,11 @@ class PostController extends Controller
     {
         $post = new Post();
         $post->message = $request->message;
-        $post->category = $request->category;
-        //$post = $request->message;
-        //$post = $request->img;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        
         $post->save();
-        /*return redirect()->route('apartments.show', [
-            'apartment' => $room->apartment_id
-        ]);*/
-        return response()->json([
-            'message' => 'Post successfully created',
-            'post' => $post
-        ], 200);
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -50,7 +47,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return $post;
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -64,14 +61,11 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->message = $request->message;
-        $post->category = $request->category;
-        //$post = $request->message;
-        //$post = $request->img;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        
         $post->save();
-        return response()->json([
-            'message' => 'Post successfully updated',
-            'post' => $post
-        ], 200);
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -84,5 +78,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
+        return Post::get();
     }
 }

@@ -16,11 +16,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $posts = Post::get();
-        foreach($posts as $post) {
-            Category::factory(5)->create([
-                'post_id' => $post->id,
-            ]);
-        }
+        Category::factory(5)->create();
     }
 }
