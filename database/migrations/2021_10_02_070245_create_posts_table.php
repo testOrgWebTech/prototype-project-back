@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Category::class);
         });
     }
 

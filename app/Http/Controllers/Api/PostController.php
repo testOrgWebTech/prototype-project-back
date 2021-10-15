@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -15,17 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Post::with(['user', 'comments', 'category'])->get();
+        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
     }
 
     /**
@@ -37,12 +30,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $post = new Post();
-        //$post = $request->message;
+        $post->message = $request->message;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        
         $post->save();
-        /*return redirect()->route('apartments.show', [
-            'apartment' => $room->apartment_id
-        ]);*/
-        return ;
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -53,18 +46,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $post = Post::findOrFail($id);
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -77,10 +60,12 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        //set value
-        //$post->name = $request->input('name');
+        $post->message = $request->message;
+        $post->category_id = $request->category_id;
+        $post->user_id = $request->user_id;
+        
         $post->save();
-        return ;
+        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -93,5 +78,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
+        return Post::get();
     }
 }
