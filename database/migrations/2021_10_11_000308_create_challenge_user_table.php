@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostCategoryTable extends Migration
+class CreateChallengeUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreatePostCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_category', function (Blueprint $table) {
+        Schema::create('challenge_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Challenge::class);
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->enum('player_team', ['A', 'B'])->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreatePostCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_category');
+        Schema::dropIfExists('challenge_user');
     }
 }

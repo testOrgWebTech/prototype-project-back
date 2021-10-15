@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Challenge;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,9 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(10)->create();
+        $this->call(CategorySeeder::class);
         $this->call(PostSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(MessageSeeder::class);
         $this->call(TeamSeeder::class);
+        $this->call(ChallengeSeeder::class);
     }
 }

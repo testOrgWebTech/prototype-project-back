@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('users',\App\Http\Controllers\Api\UserController::class);
+Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
 
 Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class);
 
@@ -33,7 +33,15 @@ Route::group([
 });
 Route::apiResource('messages',\App\Http\Controllers\Api\MessageController::class);
 
-Route::apiResource('teams',\App\Http\Controllers\Api\TeamController::class);
+Route::apiResource('teams', \App\Http\Controllers\Api\TeamController::class);
+
+Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::class);
+
+Route::post('upload-image', [\App\Http\Controllers\ImageController::class, 'store']);
+
+Route::apiResource('categories',\App\Http\Controllers\Api\CategoryController::class);
+
+Route::apiResource('comments',\App\Http\Controllers\Api\CommentController::class);
 
 Route::group([
     'middleware' => 'api',
