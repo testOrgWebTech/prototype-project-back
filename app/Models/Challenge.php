@@ -10,7 +10,7 @@ class Challenge extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = ['users_id', 'teamA_players_id', 'teamB_players_id'];
+    protected $appends = ['users_id', 'teamA_players_id', 'teamB_players_id','teamA_name','teamB_name'];
 
     protected $touches = ['post', 'teamA', 'teamB', 'users'];
 
@@ -63,5 +63,13 @@ class Challenge extends Model
     public function getTeamBplayersIdAttribute()
     {
         return implode(", ", $this->teamBplayers->pluck('id')->all());
+    }
+    public function getTeamANameAttribute()
+    {
+        return $this->teamA()->pluck('name')->first();
+    }
+    public function getTeamBNameAttribute()
+    {
+        return $this->teamB()->pluck('name')->first();
     }
 }
