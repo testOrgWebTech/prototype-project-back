@@ -64,6 +64,7 @@ class TeamController extends Controller
 
     public function updateAddMember($team, $usersWithComma)
     {
+
         if ($usersWithComma) {
             $user_ids = [];
             $user_emails = explode(',', $usersWithComma);
