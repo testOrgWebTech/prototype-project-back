@@ -17,16 +17,11 @@ class MessageResource extends JsonResource
         JsonResource::withoutWrapping();
         return [
             "id" => $this->id,
-            "sender" => [
-                "id" => $this->sender->id,
-                "name" => $this->sender->name,
-            ],
-            "receiver" => [
-                "id" => $this->receiver->id,
-                "name" => $this->receiver->name,
-            ],
+            "sender" => $this->sender,
+            "receiver" => $this->receiver,
             "message" => $this->message,
-            "created_at" => $this->created_at->setTimezone('Asia/Phnom_Penh')->format('Y-m-d H:i:s')
+            "created_at" => $this->created_at->setTimezone('Asia/Phnom_Penh')->format('Y-m-d H:i:s'),
+            "ago" => $this->created_at->diffForHumans()
         ];
     }
 }

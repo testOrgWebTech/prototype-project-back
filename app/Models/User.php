@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['challenges_id', 'imagePath'];
+//    protected $appends = ['challenges_id', 'imagePath'];
 
 
     public function getJWTIdentifier()
@@ -70,22 +70,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->isRole('REFEREE');
     }
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
-    // public function getChallengesIdAttribute()
-    // {
-    //     return implode(", ", $this->playerChallenges->pluck('id')->all());
-    // }
 
     public function posts()
     {

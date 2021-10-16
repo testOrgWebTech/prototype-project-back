@@ -30,7 +30,7 @@ class MessageController extends Controller
     }
     public function getSentMessage(){
         $user = JWTAuth::user();
-        $message = Message::where('sender_id',$user->id)->paginate(5);
+        $message = Message::where('sender_id',$user->id)->get();
 //        return $message;
         return MessageResource::collection($message);
     }
