@@ -7,6 +7,7 @@ use App\Models\Challenge;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ChallengeController extends Controller
 {
@@ -35,16 +36,7 @@ class ChallengeController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'location' => 'required|string|between:2,20',
-            // 'post_id' => 'required|integer',
-            //mode
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        
-        
+
 
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
@@ -78,12 +70,18 @@ class ChallengeController extends Controller
      */
     public function update(Request $request, Challenge $challenge)
     {
+
+        
         $challenge = Challenge::findOrFail($challenge->id);
-        $challenge->location = $request->input('location');
         $challenge->teamB_id = $request->input('teamB_id');
-        $challenge->victory_team = $request->input('victory_team');
+        $rand = rand(1, 2);
+        if ($rand === 1) {
+            $winner = "A";
+        } else {
+            $winner = "B";
+        }
+        $challenge->victory_team = $winner;
         $challenge->match_progress = $request->input('match_progress');
-        $challenge->mode = $request->input('mode');
         $challenge->save();
 
         $usersWithComma = trim($request->input('players'));

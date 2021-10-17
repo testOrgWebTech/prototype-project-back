@@ -11,8 +11,11 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function user() {
-        return $this->belongsTo(User::class,'user_id');
+    protected $appends = ['challenge_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function comments()
@@ -22,11 +25,20 @@ class Post extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function challenges()
+    public function challenge()
     {
-        return $this->hasMany(Challenge::class);
+        return $this->hasOne(Challenge::class);
+    }
+
+    public function getChallengeIdAttribute()
+    {
+        if ($this->challenge !== null) {
+            return $this->challenge->id;
+        } else {
+            return "";
+        }
     }
 }

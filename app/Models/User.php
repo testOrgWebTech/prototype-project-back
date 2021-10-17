@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['challenges_id', 'imagePath'];
+    protected $appends = ['imagePath'];
     
 
     /**
@@ -70,6 +70,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    //do not uncomment!!!
     // public function getChallengesIdAttribute()
     // {
     //     return implode(", ", $this->playerChallenges->pluck('id')->all());
