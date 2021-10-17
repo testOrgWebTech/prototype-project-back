@@ -24,13 +24,13 @@ class MessageController extends Controller
     public function index()
     {
         $user = JWTAuth::user();
-        $message = $user->messages()->get();
+        $message = $user->messages()->orderBy('created_at','desc')->get();
         return MessageResource::collection($message);
 //        return $message;
     }
     public function getSentMessage(){
         $user = JWTAuth::user();
-        $message = Message::where('sender_id',$user->id)->get();
+        $message = Message::where('sender_id',$user->id)->orderBy('created_at','desc')->get();
 //        return $message;
         return MessageResource::collection($message);
     }

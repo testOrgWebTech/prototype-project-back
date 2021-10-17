@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-//    protected $appends = ['challenges_id', 'imagePath'];
+    protected $appends = ['imagePath'];
 
 
     public function getJWTIdentifier()
