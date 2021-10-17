@@ -11,7 +11,7 @@ class Team extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = ['users_id', 'users_name', 'asTeamAchallengesId','asTeamBchallengesId'];
+    protected $appends = ['users_id', 'users_name', 'users_email', 'asTeamAchallengesId','asTeamBchallengesId'];
 
     public function users()
     {
@@ -27,6 +27,11 @@ class Team extends Model
     public function getUsersNameAttribute()
     {
         return implode(", ", $this->users->pluck('name')->all());
+    }
+
+    public function getUsersEmailAttribute()
+    {
+        return implode(", ", $this->users->pluck('email')->all());
     }
 
     //get all challenge that challenge as team A
