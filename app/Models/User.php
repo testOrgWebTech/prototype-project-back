@@ -13,8 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['challenges_id', 'imagePath'];
-    
+    protected $appends = ['imagePath'];
+
 
     /**
      * The attributes that are mass assignable.
@@ -69,11 +69,6 @@ class User extends Authenticatable implements JWTSubject
             'name' => $this->name,
         ];
     }
-
-    // public function getChallengesIdAttribute()
-    // {
-    //     return implode(", ", $this->playerChallenges->pluck('id')->all());
-    // }
 
     public function posts()
     {

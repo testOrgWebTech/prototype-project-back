@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         return Post::with(['user', 'comments', 'category'])->get();
-        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
+        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
     }
 
     /**
@@ -33,7 +33,7 @@ class PostController extends Controller
         $post->message = $request->message;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
-        
+
         $post->save();
         // return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
         return Post::with(['user', 'category'])->where("id", "=", $post->id)->get()->first();
@@ -64,7 +64,7 @@ class PostController extends Controller
         $post->message = $request->message;
         $post->category_id = $request->category_id;
         $post->user_id = $request->user_id;
-        
+
         $post->save();
         return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
     }
