@@ -14,7 +14,7 @@ class Challenge extends Model
 
     protected $touches = ['post', 'teamA', 'teamB', 'users'];
 
-    public static $challenge_modes = ['1V1', '2v2', '3v3', '4v4', '5v5', '6v6', '7v7'];
+    public static $challenge_modes = ['1v1', '2v2', '3v3', '4v4', '5v5', '6v6', '7v7'];
     
     public static $challenge_matchProgress = ['WAITING', 'ENDED'];
 

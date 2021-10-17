@@ -36,6 +36,8 @@ class ChallengeController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
         $challenge->post_id  = $request->input('post_id');
@@ -68,8 +70,9 @@ class ChallengeController extends Controller
      */
     public function update(Request $request, Challenge $challenge)
     {
+
+        
         $challenge = Challenge::findOrFail($challenge->id);
-        // $challenge->location = $request->input('location');
         $challenge->teamB_id = $request->input('teamB_id');
         $rand = rand(1, 2);
         if ($rand === 1) {
@@ -79,7 +82,6 @@ class ChallengeController extends Controller
         }
         $challenge->victory_team = $winner;
         $challenge->match_progress = $request->input('match_progress');
-        // $challenge->mode = $request->input('mode');
         $challenge->save();
 
         $usersWithComma = trim($request->input('players'));
