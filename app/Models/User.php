@@ -80,9 +80,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Comment::class);
     }
 
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
+    public function messages() {
+        return $this->hasMany(Message::class,'receiver_id');
     }
 
     public function teams()
