@@ -36,7 +36,7 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
+            'name' => 'required|string|between:1,100|unique:teams',
 
         ]);
         if ($validator->fails()) {
@@ -64,6 +64,7 @@ class TeamController extends Controller
 
     public function updateAddMember($team, $usersWithComma)
     {
+
         if ($usersWithComma) {
             $user_ids = [];
             $user_emails = explode(',', $usersWithComma);
@@ -103,6 +104,14 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:1,100',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
         $team = Team::findOrFail($team->id);
         $team->name = $request->input('name');
         $team->save();

@@ -16,18 +16,6 @@ class User extends Authenticatable implements JWTSubject
     protected $appends = ['imagePath'];
 
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -70,6 +58,22 @@ class User extends Authenticatable implements JWTSubject
         return $this->isRole('REFEREE');
     }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
+
+    // public function getChallengesIdAttribute()
+    // {
+    //     return implode(", ", $this->playerChallenges->pluck('id')->all());
+    // }
 
     public function posts()
     {
