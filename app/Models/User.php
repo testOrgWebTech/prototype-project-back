@@ -70,11 +70,6 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    // public function getChallengesIdAttribute()
-    // {
-    //     return implode(", ", $this->playerChallenges->pluck('id')->all());
-    // }
-
     public function posts()
     {
         return $this->hasMany(Post::class);

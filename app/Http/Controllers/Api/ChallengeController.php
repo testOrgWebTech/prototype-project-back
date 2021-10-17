@@ -37,7 +37,6 @@ class ChallengeController extends Controller
     public function store(Request $request)
     {
 
-
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
         $challenge->post_id  = $request->input('post_id');
