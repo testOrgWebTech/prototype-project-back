@@ -13,9 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['imagePath'];
-
-
+    protected $appends = [/*'challenges_id',*/ 'imagePath'];
+    
     /**
      * The attributes that are mass assignable.
      *

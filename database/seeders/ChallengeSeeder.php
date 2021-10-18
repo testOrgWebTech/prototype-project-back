@@ -37,17 +37,17 @@ class ChallengeSeeder extends Seeder
         //     'teamB_id' => 1,
         //     'post_id' => 3
         // ]);
-        Challenge::factory(1)->create([
+        Challenge::factory(5)->create([
             'teamA_id' => 1,
             'post_id' => 1,
             'mode' => '5V5'
         ]);
-        Challenge::factory(1)->create([
+        Challenge::factory(5)->create([
             'teamA_id' => 2,
             'post_id' => 2,
             'mode' => '5V5'
         ]);
-        Challenge::factory(1)->create([
+        Challenge::factory(5)->create([
             'teamA_id' => 3,
             'post_id' => 3,
             'mode' => '5V5'

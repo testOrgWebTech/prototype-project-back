@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->softDeletes();
             $table->foreignIdFor(\App\Models\User::class)->nullable();
             $table->foreignIdFor(\App\Models\Category::class)->nullable();
+            //$table->foreignIdFor(\App\Models\Challenge::class)->nullable();
             // $table->foreignIdFor(\App\Models\Comment::class)->nullable();
         });
     }
