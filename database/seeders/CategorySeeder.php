@@ -16,6 +16,20 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory(5)->create();
+        Category::create([
+            'name' => 'Football'
+        ]);
+        Category::create([
+            'name' => 'Basketball'
+        ]);
+        Category::create([
+            'name' => 'CSGO'
+        ]);
+        Category::create([
+            'name' => 'Valorant'
+        ]);
+        Category::create([
+            'name' => 'Chess'
+        ]);
     }
 }

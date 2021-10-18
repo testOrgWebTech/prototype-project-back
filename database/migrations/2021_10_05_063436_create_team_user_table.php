@@ -15,8 +15,8 @@ class CreateTeamUserTable extends Migration
     {
         Schema::create('team_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Team::class);
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Team::class)->nullable();
+            $table->foreignIdFor(\App\Models\User::class)->nullable();
             $table->timestamps();
         });
     }
