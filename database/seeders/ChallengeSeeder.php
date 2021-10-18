@@ -16,6 +16,51 @@ class ChallengeSeeder extends Seeder
      */
     public function run()
     {
+        for ($j = 1; $j < 15; $j++) {
+            if ($j % 3 === 0) {
+                Challenge::factory()->create([
+                    'post_id' => $j,
+                    'mode' => '5v5'
+                ]);
+            } else if ($j % 3 === 2) {
+                Challenge::factory()->create([
+                    'post_id' => $j,
+                    'mode' => '1v1'
+                ]);
+            } else {
+                Challenge::factory()->create([
+                    'post_id' => $j,
+                    'mode' => '2v2'
+                ]);
+            }
+        }
+        // Challenge::factory()->create([
+        //     'post_id' => 1,
+        //     'mode' => '7v7'
+        // ]);
+        // $posts = Post::get();
+        // foreach ($posts as $post) {
+        //     Challenge::factory()->create([
+        //         'post_id' => $post->id,
+        //         'mode' => '7v7'
+        //     ]);
+        // }
+
+        // Challenge::factory(5)->create([
+        //     'teamA_id' => 1,
+        //     'post_id' => 1,
+        //     'mode' => '5V5'
+        // ]);
+        // Challenge::factory(5)->create([
+        //     'teamA_id' => 2,
+        //     'post_id' => 2,
+        //     'mode' => '5V5'
+        // ]);
+        // Challenge::factory(5)->create([
+        //     'teamA_id' => 3,
+        //     'post_id' => 3,
+        //     'mode' => '5V5'
+        // ]);
         // $posts = Post::get();
         // foreach($posts as $post) {
         //     Challenge::factory(1)->create([
@@ -37,21 +82,6 @@ class ChallengeSeeder extends Seeder
         //     'teamB_id' => 1,
         //     'post_id' => 3
         // ]);
-        Challenge::factory(5)->create([
-            'teamA_id' => 1,
-            'post_id' => 1,
-            'mode' => '5V5'
-        ]);
-        Challenge::factory(5)->create([
-            'teamA_id' => 2,
-            'post_id' => 2,
-            'mode' => '5V5'
-        ]);
-        Challenge::factory(5)->create([
-            'teamA_id' => 3,
-            'post_id' => 3,
-            'mode' => '5V5'
-        ]);
         // $teams = Team::get();
         // foreach ($teams as $team) {
         //     Challenge::factory(1)->create([
