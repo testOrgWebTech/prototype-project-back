@@ -7,12 +7,14 @@ use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MessageController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth:api');
     }
 
@@ -24,14 +26,15 @@ class MessageController extends Controller
     public function index()
     {
         $user = JWTAuth::user();
-        $message = $user->messages()->orderBy('created_at','desc')->get();
+        $message = $user->messages()->orderBy('created_at', 'desc')->get();
         return MessageResource::collection($message);
-//        return $message;
+        //        return $message;
     }
-    public function getSentMessage(){
+    public function getSentMessage()
+    {
         $user = JWTAuth::user();
-        $message = Message::where('sender_id',$user->id)->orderBy('created_at','desc')->get();
-//        return $message;
+        $message = Message::where('sender_id', $user->id)->orderBy('created_at', 'desc')->get();
+        //        return $message;
         return MessageResource::collection($message);
     }
     /**
@@ -46,11 +49,9 @@ class MessageController extends Controller
             'message' => 'required|max:255',
             'receiver' => 'required|numeric',
         ]);
-
         if ($validator->fails()) {
-            return $validator->errors();
+            return response()->json($validator->errors()->toJson(), 400);
         }
-
 
         $user = JWTAuth::user();
         $message = new Message();
@@ -59,7 +60,6 @@ class MessageController extends Controller
         $message->receiver_id = $request->input('receiver');
         $message->save();
         return new MessageResource($message);
-
     }
 
     /**

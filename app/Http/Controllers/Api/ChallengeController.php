@@ -36,6 +36,18 @@ class ChallengeController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'location' => 'required|string|between:2,100',
+            'post_id' => 'required',
+            'teamA_id' => 'required',
+            'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
+            'mode' => ['required', Rule::in(Challenge::$challenge_modes)],
+            'teamA_players' => 'required|string',
+            'player_team' => 'required|string'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
 
         $challenge = new Challenge();
         $challenge->location = $request->input('location');
@@ -69,8 +81,16 @@ class ChallengeController extends Controller
      */
     public function update(Request $request, Challenge $challenge)
     {
+        $validator = Validator::make($request->all(), [
+            'location' => 'required|string|between:2,100',
+            'teamB_id' => 'required',
+            'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
+            'player_team' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
 
-        
         $challenge = Challenge::findOrFail($challenge->id);
         $challenge->teamB_id = $request->input('teamB_id');
         $rand = rand(1, 2);
