@@ -17,8 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::with(['user', 'comments', 'category'])->get();
-        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
+        return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at','DESC')->get();
+        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
     }
 
     /**
@@ -48,7 +48,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
+        return Post::with(['user', 'comments', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -66,7 +66,7 @@ class PostController extends Controller
         $post->user_id = $request->user_id;
 
         $post->save();
-        return Post::with(['user', 'comment', 'category'])->where("id", "=", $post->id)->get()->first();
+        return Post::with(['user', 'comments', 'category'])->where("id", "=", $post->id)->get()->first();
     }
 
     /**
@@ -80,5 +80,10 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
         return Post::get();
+    }
+
+    public function getPostsByCateId($cate_id)
+    {
+        return Post::where('cate_id', '=', $cate_id)->get();
     }
 }

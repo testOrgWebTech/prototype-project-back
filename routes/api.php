@@ -43,6 +43,10 @@ Route::apiResource('categories',\App\Http\Controllers\Api\CategoryController::cl
 
 Route::apiResource('comments',\App\Http\Controllers\Api\CommentController::class);
 
+Route::post('comments-by-post-id/{id}', [\App\Http\Controllers\Api\CommentController::class, 'getCommentsByPostId']);
+
+Route::post('posts-by-cate-id/{id}', [\App\Http\Controllers\Api\CommentController::class, 'getPostsByCateId']);
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
