@@ -18,6 +18,7 @@
 - update your .env
 - set up your database
 - php artisan migrate --seed
+- php artisan storage:link
 - php artisan serve
 ```
 
