@@ -10,13 +10,16 @@ class Challenge extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = ['users_id', 'teamA_players_id', 'teamB_players_id','teamA_name','teamB_name'];
+    protected $appends = ['users_id', 'teamA_players_id', 'teamB_players_id','teamA_name','teamB_name',
+        'teamA_players_name','teamB_players_name'];
 
     protected $touches = ['post', 'teamA', 'teamB', 'users'];
 
     public static $challenge_modes = ['1v1', '2v2', '3v3', '4v4', '5v5', '6v6', '7v7'];
 
+
     public static $challenge_matchProgress = ['WAITING', 'ENDED'];
+
 
     public function post()
     {
@@ -65,6 +68,14 @@ class Challenge extends Model
     public function getTeamBplayersIdAttribute()
     {
         return implode(", ", $this->teamBplayers->pluck('id')->all());
+    }
+    public function getTeamAplayersNameAttribute()
+    {
+        return implode(", ", $this->teamAplayers->pluck('name')->all());
+    }
+    public function getTeamBplayersNameAttribute()
+    {
+        return implode(", ", $this->teamBplayers->pluck('name')->all());
     }
     public function getTeamANameAttribute()
     {

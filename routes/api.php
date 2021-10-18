@@ -47,6 +47,9 @@ Route::post('comments-by-post-id/{id}', [\App\Http\Controllers\Api\CommentContro
 
 Route::get('posts-by-cate-id/{id}', [\App\Http\Controllers\Api\PostController::class, 'getPostsByCateId']);
 
+Route::post('getUserByEmail',[\App\Http\Controllers\Api\UserController::class, "getUserByEmail"]);
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
