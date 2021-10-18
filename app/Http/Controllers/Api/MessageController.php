@@ -45,15 +45,16 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+        $user = JWTAuth::user();
         $validator = Validator::make($request->all(), [
             'message' => 'required|max:255',
-            'receiver' => 'required|numeric',
+            'receiver' => 'required|numeric|exists:App\Models\User,id|different:sender',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $user = JWTAuth::user();
+
         $message = new Message();
         $message->message = $request->input('message');
         $message->sender_id = $user->id;
