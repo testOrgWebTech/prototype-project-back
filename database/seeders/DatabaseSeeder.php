@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(10)->create();
+        $this->call(TeamSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(ChallengeSeeder::class);
         $this->call(PostSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(MessageSeeder::class);
-        $this->call(TeamSeeder::class);
-        $this->call(ChallengeSeeder::class);
     }
 }
