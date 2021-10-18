@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CommentController extends Controller
 {
@@ -17,7 +16,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return Comment::get();
+        $comments =  Comment::get();
+//        return $comments;
+        return CommentResource::collection($comments);
     }
 
     /**
@@ -73,6 +74,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
+
         $comment = Comment::findOrFail($id);
         $comment->delete();
         return Comment::get();
@@ -80,6 +82,6 @@ class CommentController extends Controller
 
     public function getCommentsByPostId($post_id)
     {
-        return Comment::where('post_id', '=', $post_id)->get();
+        return CommentResource::collection(Comment::where('post_id', '=', $post_id)->get());
     }
 }

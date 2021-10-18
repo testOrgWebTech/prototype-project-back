@@ -45,6 +45,8 @@ Route::apiResource('comments',\App\Http\Controllers\Api\CommentController::class
 
 Route::post('comments-by-post-id/{id}', [\App\Http\Controllers\Api\CommentController::class, 'getCommentsByPostId']);
 
+Route::post('getUserByEmail',[\App\Http\Controllers\Api\UserController::class, "getUserByEmail"]);
+
 Route::post('posts-by-cate-id/{id}', [\App\Http\Controllers\Api\CommentController::class, 'getPostsByCateId']);
 
 Route::group([
