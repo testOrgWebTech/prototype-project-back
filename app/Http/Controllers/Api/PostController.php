@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -17,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at','DESC')->get();
+        return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at', 'DESC')->get();
         //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
     }
 
