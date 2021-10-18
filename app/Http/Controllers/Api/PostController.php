@@ -19,10 +19,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at', 'DESC')->get();
-
+        return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at', 'DESC')->paginate(5);
         //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
-
     }
 
     /**
@@ -88,7 +86,6 @@ class PostController extends Controller
 
     public function getPostsByCateId($cate_id)
     {
-        return Post::with(['user', 'comments', 'category', 'challenge'])->where('category_id', '=', $cate_id)->get();
-
+        return Post::with(['user', 'comments', 'category', 'challenge'])->where('category_id', '=', $cate_id)->paginate(5);
     }
 }
