@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class TeamController extends Controller
 {
@@ -37,8 +38,8 @@ class TeamController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:1,100|unique:teams',
-
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
@@ -106,9 +107,17 @@ class TeamController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:1,100',
-
         ]);
-        if ($validator->fails()) {
+        $user = JWTAuth::user();
+        $members_id = explode(',', $team->users_id);
+        $isMember = false;
+        foreach ($members_id as $member_id) {
+            $member_id = trim($member_id);
+            if ($user->id == $member_id) {
+                $isMember = true;
+            }
+        }
+        if ($validator->fails() ||  $isMember === false) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -119,7 +128,7 @@ class TeamController extends Controller
         $usersWithComma = trim($request->input('users'));
         if (strtolower($request->input('option')) === "add") {
             $this->updateAddMember($team, $usersWithComma);
-        } else {
+        } else if (strtolower($request->input('option')) === "delete") {
             $this->updateDeleteMember($team, $usersWithComma);
         }
 
