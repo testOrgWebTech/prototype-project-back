@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Challenge;
-use App\Models\Team;
+use App\Models\TeamUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ChallengeFactory extends Factory
+class TeamUserFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Challenge::class;
+    protected $model = TeamUser::class;
 
     /**
      * Define the model's default state.
@@ -23,9 +22,7 @@ class ChallengeFactory extends Factory
     public function definition()
     {
         return [
-            'location' => $this->faker->country(),
-            'teamA_id' => Team::inRandomOrder()->first(),
-            // 'mode' => Challenge::$challenge_modes->inRandomOrder()->first(),
+            //
         ];
     }
 }

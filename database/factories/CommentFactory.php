@@ -23,8 +23,10 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'message' => $this->faker->realText(50),
+            'message' => $this->faker->realText(40),
+            // 'message' => $this->faker->paragraph(2),
             'post_id' => Post::inRandomOrder()->first(),
+            'user_id' => rand(1, 5),
         ];
     }
 }

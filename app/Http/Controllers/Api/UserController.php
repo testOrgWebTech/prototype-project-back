@@ -63,4 +63,9 @@ class UserController extends Controller
     {
         //
     }
+
+    public function getUserByEmail(Request $request) {
+        $email = $request->input('email');
+        return User::where('email','=',$email)->get();
+    }
 }

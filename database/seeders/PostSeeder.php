@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Challenge;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
@@ -16,6 +17,12 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory(5)->create();
+        $users = User::get();
+
+        foreach ($users as $user) {
+            Post::factory()->create([
+                'user_id' => $user->id,
+            ]);
+        }
     }
 }

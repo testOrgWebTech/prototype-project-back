@@ -84,5 +84,6 @@ class CommentController extends Controller
     public function getCommentsByPostId($post_id)
     {
         return Comment::with(['user', 'post'])->where('post_id', '=', $post_id)->get();
+
     }
 }
