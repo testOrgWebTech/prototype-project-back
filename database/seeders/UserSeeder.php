@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
@@ -112,6 +113,14 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => 'pass1234',
             'remember_token' => Str::random(10),
+        ]);
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('pass1234'),
+            'remember_token' => Str::random(10),
+            'role'=>'ADMIN'
         ]);
     }
 }

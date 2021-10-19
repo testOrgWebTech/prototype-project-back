@@ -48,10 +48,12 @@ class MessageController extends Controller
         $user = JWTAuth::user();
         $validator = Validator::make($request->all(), [
             'message' => 'required|max:255',
+            'sender'=> 'required',
             'receiver' => 'required|numeric|exists:App\Models\User,id|different:sender',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+//            return response()->json($validator->errors()->toJson(), 400);
+            return $validator->errors();
         }
 
 
