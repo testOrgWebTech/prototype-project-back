@@ -24,7 +24,7 @@ class ChallengeFactory extends Factory
     {
         return [
             'location' => $this->faker->country(),
-            'teamA_id' => Team::inRandomOrder()->first(),
+            // 'teamA_id' => Team::inRandomOrder()->first(),
             // 'mode' => Challenge::$challenge_modes->inRandomOrder()->first(),
         ];
     }
