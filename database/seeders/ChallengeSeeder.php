@@ -17,21 +17,46 @@ class ChallengeSeeder extends Seeder
     public function run()
     {
         for ($j = 1; $j < 15; $j++) {
+            $randTeamA = rand(1, 4);
+            $randTeamB = rand(1, 4);
+            if ($randTeamA === $randTeamB) {
+                if ($randTeamB === 1) {
+                    $randTeamB += 1;
+                } else if ($randTeamB === 4) {
+                    $randTeamB -= 1;
+                }
+            }
             if ($j % 3 === 0) {
                 Challenge::factory()->create([
                     'post_id' => $j,
+                    'teamA_id' => $randTeamA,
                     'mode' => '5v5'
                 ]);
             } else if ($j % 3 === 2) {
                 Challenge::factory()->create([
+                    'teamA_id' => $randTeamA,
                     'post_id' => $j,
                     'mode' => '1v1'
                 ]);
             } else {
+                $winner = rand(1, 2);
+                if ($winner === 1) {
+                    $winnerTeam  = 'A';
+                } else if ($winner === 2) {
+                    $winnerTeam  = 'B';
+                }
                 Challenge::factory()->create([
                     'post_id' => $j,
-                    'mode' => '2v2'
+                    'teamA_id' => $randTeamA,
+                    'teamB_id' => $randTeamB,
+                    'mode' => '5v5',
+                    'match_progress' => 'ENDED',
+                    'victory_team' => $winnerTeam
                 ]);
+                // Challenge::factory()->create([
+                //     'post_id' => $j,
+                //     'mode' => '2v2'
+                // ]);
             }
         }
         // Challenge::factory()->create([
