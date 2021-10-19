@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return Comment::get();
+        $comments =  Comment::get();
+//        return $comments;
+        return CommentResource::collection($comments);
     }
 
     /**
@@ -28,11 +31,11 @@ class CommentController extends Controller
     {
         $comment = new Comment();
         $comment->message = $request->message;
-        $comment->category_id = $request->category_id;
+        $comment->post_id = $request->post_id;
         $comment->user_id = $request->user_id;
-        
+
         $comment->save();
-        return Comment::with(['user', 'post']);
+        return Comment::with(['user', 'post'])->where('id', '=', $comment->id)->get()->first();
     }
 
     /**
@@ -59,7 +62,7 @@ class CommentController extends Controller
         $comment->message = $request->message;
         $comment->category_id = $request->category_id;
         $comment->user_id = $request->user_id;
-        
+
         $comment->save();
         return Comment::with(['user', 'post'])->where('id', '=', $id)->get()->first();
     }
@@ -76,5 +79,10 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $comment->delete();
         return Comment::get();
+    }
+
+    public function getCommentsByPostId($post_id)
+    {
+        return Comment::with(['user', 'post'])->where('post_id', '=', $post_id)->get();
     }
 }
