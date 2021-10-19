@@ -39,7 +39,6 @@ class ChallengeController extends Controller
         $validator = Validator::make($request->all(), [
             'location' => 'required|string|between:2,100',
             'post_id' => 'required',
-            'teamA_id' => 'required',
             'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
             'mode' => ['required', Rule::in(Challenge::$challenge_modes)],
             'teamA_players' => 'required|string',
@@ -82,8 +81,6 @@ class ChallengeController extends Controller
     public function update(Request $request, Challenge $challenge)
     {
         $validator = Validator::make($request->all(), [
-            'location' => 'required|string|between:2,100',
-            'teamB_id' => 'required',
             'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
             'player_team' => 'required|string',
         ]);
