@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         return Post::with(['user', 'comments', 'category', 'challenge'])->orderBy('created_at', 'DESC')->paginate(5);
-        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10); 
+        //Post::join('users', 'users.id', '=', 'posts.user_id')->paginate(10);
     }
 
     /**
@@ -34,6 +34,7 @@ class PostController extends Controller
         $post = new Post();
         $post->message = $request->message;
         $post->category_id = $request->category_id;
+        $post->mode = $request->mode;
         $post->user_id = $request->user_id;
 
         $post->save();
