@@ -20,9 +20,18 @@ class PostSeeder extends Seeder
         $users = User::get();
 
         foreach ($users as $user) {
-            Post::factory()->create([
-                'user_id' => $user->id,
-            ]);
+            if ($user->id % 2 == 0){
+                Post::factory()->create([
+                    'user_id' => $user->id,
+                    'mode' => 'post'
+                ]);
+            }
+            else{
+                Post::factory()->create([
+                    'user_id' => $user->id,
+                    'mode' => 'challenge'
+                ]);
+            }
         }
     }
 }
