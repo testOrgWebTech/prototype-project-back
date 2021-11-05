@@ -49,6 +49,7 @@ Route::get('posts-by-cate-id/{id}', [\App\Http\Controllers\Api\PostController::c
 
 Route::post('getUserByEmail',[\App\Http\Controllers\Api\UserController::class, "getUserByEmail"]);
 
+Route::get('getAllPosts',[\App\Http\Controllers\Api\PostController::class, "getAllPosts"]);
 
 Route::group([
     'middleware' => 'api',
