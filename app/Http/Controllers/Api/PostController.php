@@ -89,4 +89,10 @@ class PostController extends Controller
     {
         return Post::with(['user', 'comments', 'category', 'challenge'])->where('category_id', '=', $cate_id)->paginate(5);
     }
+
+    public function getAllPosts()
+    {
+        $posts = Post::get();
+        return $posts;
+    }
 }
