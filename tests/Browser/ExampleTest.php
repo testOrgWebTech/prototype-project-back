@@ -22,14 +22,14 @@ class ExampleTest extends DuskTestCase
                 // ->loginAs(User::find(15))
                 ->visit('http://localhost:8080')
                 ->refresh()
+                ->assertPathIs('/');
                 // ->assertSee('Home');
                 // ->waitForLocation('http://localhost:8080')
                 // ->waitForReload()
-                // ->assertPathIs('/');
                 // ->assertPathBeginsWith('/home');
                 // ->assertScript('window.isLoaded')
                 // ->assertAuthenticatedAs($user);
-                ->assertUrlIs('http://localhost:8080');
+                // ->assertUrlIs('http://localhost:8080');
             // ->assertDialogOpened('Dialog message');
         });
     }
