@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('role',['PLAYER','REFEREE','ADMIN'])
                 ->default('PLAYER');
             $table->enum("status",['ACTIVE','INACTIVE'])->default("ACTIVE");
+            $table->string('detail')->default("Your Detail")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
