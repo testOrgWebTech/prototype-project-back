@@ -55,11 +55,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = JWTAuth::user();
+
+        /*$user = JWTAuth::user();
         if ($user->role != 'ADMIN')
-            return response()->json(['message'=>"Unauthenticated"],401);
+            return response()->json(['message'=>"Unauthenticated"],401);*/
         $target = User::findOrFail($id);
-        $target->status = $request->status;
+        if($request->status != null){
+            $target->status = $request->status;
+        }
+        $target->detail = $request->detail;
+        $target->save();
 
         return $target;
 
