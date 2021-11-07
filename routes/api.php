@@ -38,6 +38,7 @@ Route::apiResource('teams', \App\Http\Controllers\Api\TeamController::class);
 Route::apiResource('challenges', \App\Http\Controllers\Api\ChallengeController::class);
 
 Route::post('upload-image', [\App\Http\Controllers\ImageController::class, 'store']);
+Route::post('uploadMessage',[\App\Http\Controllers\ImageController::class, 'uploadMessage']);
 
 Route::apiResource('categories',\App\Http\Controllers\Api\CategoryController::class);
 
