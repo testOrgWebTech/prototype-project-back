@@ -41,4 +41,7 @@ class Post extends Model
             return "";
         }
     }
+    public function images(){
+        return $this->hasMany(Image::class, 'image_id');
+    }
 }
