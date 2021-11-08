@@ -15,14 +15,29 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $imageFullName = $request->file('image')->getClientOriginalName();
-
         $request->file('image')->storeAs('images', $imageFullName);
-
         $image = new Image();
         $image->name = $imageFullName;
         $image->path = Storage::url("images/" . $imageFullName);
         $user = JWTAuth::user();
         $image->user_id = $user->id;
+        $image->save();
+
+        return response()->json([
+            'message' => 'Image Successfully Uploaded.',
+            'images' => Image::get(),
+        ]);
+    }
+    public function uploadMessage(Request $request)
+    {
+        $imageFullName = $request->file('image')->getClientOriginalName();
+
+        $request->file('image')->storeAs('images', $imageFullName);
+        $message_id = $request->input('message_id');
+        $image = new Image();
+        $image->name = $imageFullName;
+        $image->path = Storage::url("images/" . $imageFullName);
+        $image->message_id = $message_id;
         $image->save();
 
         return response()->json([

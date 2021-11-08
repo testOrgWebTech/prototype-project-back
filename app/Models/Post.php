@@ -44,4 +44,7 @@ class Post extends Model
     public function getCategoryNameAttribute(){
         return $this->category->name;
     }
+    public function images(){
+        return $this->hasMany(Image::class, 'image_id');
+    }
 }

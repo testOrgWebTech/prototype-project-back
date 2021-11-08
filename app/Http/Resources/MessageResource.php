@@ -21,7 +21,8 @@ class MessageResource extends JsonResource
             "receiver" => $this->receiver,
             "message" => $this->message,
             "created_at" => $this->created_at->setTimezone('Asia/Phnom_Penh')->format('Y-m-d H:i:s'),
-            "ago" => $this->created_at->diffForHumans()
+            "ago" => $this->created_at->diffForHumans(),
+            "imgPath" => $this->images
         ];
     }
 }
