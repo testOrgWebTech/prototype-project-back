@@ -51,6 +51,8 @@ Route::post('getUserByEmail',[\App\Http\Controllers\Api\UserController::class, "
 
 Route::get('getAllPosts',[\App\Http\Controllers\Api\PostController::class, "getAllPosts"]);
 
+Route::put('updateTeamWin', [\App\Http\Controllers\Api\ChallengeController::class, 'updateTeamWin']);
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
