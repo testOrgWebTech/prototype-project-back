@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(TeamSeeder::class);
         $this->call(CategorySeeder::class);
-        $this->call(ChallengeSeeder::class);
         $this->call(PostSeeder::class);
+        $this->call(ChallengeSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(MessageSeeder::class);
         $this->call(TeamUserSeeder::class);

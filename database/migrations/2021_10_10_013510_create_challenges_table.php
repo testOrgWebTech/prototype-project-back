@@ -19,6 +19,8 @@ class CreateChallengesTable extends Migration
             $table->foreignIdFor(\App\Models\Post::class);
             $table->foreignIdFor(\App\Models\Team::class, 'teamA_id')->nullable();
             $table->foreignIdFor(\App\Models\Team::class, 'teamB_id')->nullable();
+            $table->string('teamA_name')->nullable();
+            $table->string('teamB_name')->nullable();
             $table->enum('victory_team', ['A', 'B'])->nullable();
             $table->enum('match_progress', ['WAITING', 'ENDED'])->default('WAITING');
             $table->enum('mode', ['1v1', '2v2', '3v3', '4v4', '5v5', '6v6', '7v7']);

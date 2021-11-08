@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = ['challenge_id'];
+    protected $appends = ['challenge_id', 'category_name'];
 
     public function user()
     {
@@ -43,5 +43,9 @@ class Post extends Model
     }
     public function images(){
         return $this->hasMany(Image::class, 'image_id');
+    }
+    public function getCategoryNameAttribute(){
+        return $this->category->name;
+
     }
 }

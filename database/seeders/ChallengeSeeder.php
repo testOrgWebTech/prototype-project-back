@@ -26,37 +26,42 @@ class ChallengeSeeder extends Seeder
                     $randTeamB -= 1;
                 }
             }
-            if ($j % 3 === 0) {
-                Challenge::factory()->create([
-                    'post_id' => $j,
-                    'teamA_id' => $randTeamA,
-                    'mode' => '5v5'
-                ]);
-            } else if ($j % 3 === 2) {
-                Challenge::factory()->create([
-                    'teamA_id' => $randTeamA,
-                    'post_id' => $j,
-                    'mode' => '1v1'
-                ]);
-            } else {
-                $winner = rand(1, 2);
-                if ($winner === 1) {
-                    $winnerTeam  = 'A';
-                } else if ($winner === 2) {
-                    $winnerTeam  = 'B';
+            $post = Post::findOrFail($j);
+            $teamA = Team::findOrFail($randTeamA);
+            $teamB = Team::findOrFail($randTeamB);
+            if ($post->mode === 'challenge'){
+                if ($j % 3 === 0) {
+                    Challenge::factory()->create([
+                        'post_id' => $j,
+                        'teamA_id' => $randTeamA,
+                        'teamA_name'=> $teamA->name,
+                        'mode' => '5v5'
+                    ]);
+                } else if ($j % 3 === 2) {
+                    Challenge::factory()->create([
+                        'teamA_id' => $randTeamA,
+                        'post_id' => $j,
+                        'teamA_name'=> $teamA->name,
+                        'mode' => '1v1'
+                    ]);
+                } else {
+                    $winner = rand(1, 2);
+                    if ($winner === 1) {
+                        $winnerTeam  = 'A';
+                    } else if ($winner === 2) {
+                        $winnerTeam  = 'B';
+                    }
+                    Challenge::factory()->create([
+                        'post_id' => $j,
+                        'teamA_id' => $randTeamA,
+                        'teamA_name'=> $teamA->name,
+                        'teamB_id' => $randTeamB,
+                        'teamB_name'=> $teamB->name,
+                        'mode' => '5v5',
+                        'match_progress' => 'ENDED',
+                        'victory_team' => $winnerTeam
+                    ]);
                 }
-                Challenge::factory()->create([
-                    'post_id' => $j,
-                    'teamA_id' => $randTeamA,
-                    'teamB_id' => $randTeamB,
-                    'mode' => '5v5',
-                    'match_progress' => 'ENDED',
-                    'victory_team' => $winnerTeam
-                ]);
-                // Challenge::factory()->create([
-                //     'post_id' => $j,
-                //     'mode' => '2v2'
-                // ]);
             }
         }
         // Challenge::factory()->create([
