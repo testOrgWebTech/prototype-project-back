@@ -35,6 +35,10 @@ class MessageController extends Controller
         $user = JWTAuth::user();
         $message = Message::where('sender_id', $user->id)->orderBy('created_at', 'desc')->get();
         //        return $message;
+        if (count($message) == 0)
+        {
+            return Message::where('sender_id', $user->id)->orderBy('created_at', 'desc')->get()->toArray();
+        }
         return MessageResource::collection($message);
     }
     /**
