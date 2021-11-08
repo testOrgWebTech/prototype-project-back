@@ -1,12 +1,12 @@
 version: '3.1'
 services:
-  nginx:
-    image: nginx
-    volumes:
-      - .dockerconfig/nginx/conf.d:/etc/nginx/conf.d
-      - .:/var/www/html
-    ports:
-      - 8010:80
+  # nginx:
+  #   image: nginx
+  #   volumes:
+  #     - .dockerconfig/nginx/conf.d:/etc/nginx/conf.d
+  #     - .:/var/www/html
+  #   ports:
+  #     - 8010:80
 
   php:
     build: .dockerconfig/php
