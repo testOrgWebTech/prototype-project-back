@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             //$table->string('name');
             $table->text('message')->nullable();
+            $table->enum('mode', ['post', 'challenge'])->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreignIdFor(\App\Models\User::class)->nullable();

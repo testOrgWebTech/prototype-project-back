@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api',['except' => ['index']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +55,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        /*$user = JWTAuth::user();
+        if ($user->role != 'ADMIN')
+            return response()->json(['message'=>"Unauthenticated"],401);*/
+        $target = User::findOrFail($id);
+        if($request->status != null){
+            $target->status = $request->status;
+        }
+        $target->detail = $request->detail;
+        $target->save();
+
+        return $target;
+
     }
 
     /**
