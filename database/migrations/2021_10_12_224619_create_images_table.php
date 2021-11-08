@@ -18,9 +18,6 @@ class CreateImagesTable extends Migration
             $table->string('name');
             $table->string('path')->nullable(true)->default('off.jpg');
             $table->foreignIdFor(\App\Models\User::class)->nullable(true);
-            $table->foreignIdFor(\App\Models\Post::class)->nullable(true);
-            $table->foreignIdFor(\App\Models\Comment::class)->nullable(true);
-            $table->foreignIdFor(\App\Models\Message::class)->nullable(true);
             $table->timestamps();
             $table->softDeletes();;
         });

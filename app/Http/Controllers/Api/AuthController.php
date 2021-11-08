@@ -22,7 +22,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', [
             'except' => ['login', 'register']
         ]);
-//        $this->middleware('checkBanned');
     }
 
     /**
@@ -43,8 +42,7 @@ class AuthController extends Controller
         if (! $token = JWTAuth::attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if (JWTAuth::user()->status == "INACTIVE")
-            return response()->json(['error' => 'Your account has been suspended.'], 401);
+
         return $this->respondWithToken($token);
     }
 

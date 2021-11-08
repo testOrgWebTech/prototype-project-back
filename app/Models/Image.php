@@ -19,7 +19,4 @@ class Image extends Model
     {
         return Storage::url("images/" . $value);
     }
-    public function messages(){
-        return $this->belongsTo(Message::class);
-    }
 }
