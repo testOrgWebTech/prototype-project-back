@@ -24,7 +24,7 @@ class ChallengeController extends Controller
      */
     public function index()
     {
-        $challenges = Challenge::get();
+        $challenges = Challenge::with('post.user')->get();
         return $challenges;
     }
 
@@ -42,6 +42,7 @@ class ChallengeController extends Controller
             'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
             'mode' => ['required', Rule::in(Challenge::$challenge_modes)],
             'teamA_players' => 'required|string',
+            'teamA_name' => 'required|string',
             'player_team' => 'required|string'
         ]);
         if ($validator->fails()) {
@@ -52,6 +53,7 @@ class ChallengeController extends Controller
         $challenge->location = $request->input('location');
         $challenge->post_id  = $request->input('post_id');
         $challenge->teamA_id = $request->input('teamA_id');
+        $challenge->teamA_name = $request->input('teamA_name');
         $challenge->match_progress = $request->input('match_progress');
         $challenge->mode = $request->input('mode');
         $challenge->save();
@@ -81,7 +83,6 @@ class ChallengeController extends Controller
     public function update(Request $request, Challenge $challenge)
     {
         $validator = Validator::make($request->all(), [
-            'match_progress' => ['required', Rule::in(Challenge::$challenge_matchProgress)],
             'player_team' => 'required|string',
         ]);
         if ($validator->fails()) {
@@ -90,14 +91,8 @@ class ChallengeController extends Controller
 
         $challenge = Challenge::findOrFail($challenge->id);
         $challenge->teamB_id = $request->input('teamB_id');
-        $rand = rand(1, 2);
-        if ($rand === 1) {
-            $winner = "A";
-        } else {
-            $winner = "B";
-        }
-        $challenge->victory_team = $winner;
-        $challenge->match_progress = $request->input('match_progress');
+        $challenge->teamB_name = $request->input('teamB_name');
+
         $challenge->save();
 
         $usersWithComma = trim($request->input('players'));
@@ -140,5 +135,20 @@ class ChallengeController extends Controller
                 }
             }
         }
+    }
+
+    public function updateTeamWin(Request $request)
+    {
+        $id = $request->input("id");
+        $challenge = Challenge::findOrFail($id);
+        $challenge->match_progress = 'ENDED';
+        $challenge->victory_team = $request->input("victory_team");
+
+        $challenge->save();
+
+        $usersWithComma = trim($request->input('players'));
+        $this->updateTeamPlayers($challenge, $usersWithComma, $request);
+
+        return $this->show($challenge);
     }
 }
