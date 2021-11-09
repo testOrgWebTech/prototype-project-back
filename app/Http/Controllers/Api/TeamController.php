@@ -8,15 +8,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('auth:api', [
             'except' => ['show']
         ]);
-    }
+    }*/
     /**
      * Display a listing of the resource.
      *
@@ -46,10 +47,13 @@ class TeamController extends Controller
 
         $team = new Team();
         $team->name = $request->input('name');
+        $team->detail = $request->input('detail');
         $team->save();
 
-        $userId = $request->input('user_id');
-        $team->users()->attach($userId);
+        $team->users()->syncWithoutDetaching($request->selectedPlayers);
+        $team->users()->attach($request->input('user_id'));
+
+        return $team;
     }
 
     /**
@@ -108,7 +112,7 @@ class TeamController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:1,100',
         ]);
-        $user = JWTAuth::user();
+        /*$user = JWTAuth::user();
         $members_id = explode(',', $team->users_id);
         $isMember = false;
         foreach ($members_id as $member_id) {
@@ -119,18 +123,22 @@ class TeamController extends Controller
         }
         if ($validator->fails() ||  $isMember === false) {
             return response()->json($validator->errors()->toJson(), 400);
-        }
+        }*/
 
         $team = Team::findOrFail($team->id);
         $team->name = $request->input('name');
         $team->save();
 
-        $usersWithComma = trim($request->input('users'));
+        DB::table('team_user')->where('team_id', '=', $team->id)->delete();
+        $team->users()->syncWithoutDetaching($request->selectedPlayers);
+
+        /*$usersWithComma = trim($request->input('users'));
         if (strtolower($request->input('option')) === "add") {
             $this->updateAddMember($team, $usersWithComma);
         } else if (strtolower($request->input('option')) === "delete") {
             $this->updateDeleteMember($team, $usersWithComma);
-        }
+        }*/
+
 
         return $this->show($team);
     }
