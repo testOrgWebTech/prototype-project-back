@@ -3,7 +3,7 @@ pipeline {
      stages {
           stage('Source') {
                steps {
-                    git branch: 'gus',
+                    git branch: 'main',
                         url: 'https://github.com/testOrgWebTech/prototype-project-back'
                }
           }
