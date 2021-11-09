@@ -35,8 +35,8 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
         User::create([
-            'name' => 'Jimmy',
-            'email' => 'jimmy@gmail.com',
+            'name' => 'Jim',
+            'email' => 'jim@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('pass1234'),
             'remember_token' => Str::random(10),

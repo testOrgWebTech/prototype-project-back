@@ -35,7 +35,7 @@ class ChallengeSeeder extends Seeder
                         'post_id' => $j,
                         'teamA_id' => $randTeamA,
                         'teamA_name'=> $teamA->name,
-                        'mode' => '5v5'
+                        'mode' => '2V2'
                     ]);
                 } else if ($j % 3 === 2) {
                     Challenge::factory()->create([
