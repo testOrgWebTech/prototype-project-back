@@ -19,7 +19,7 @@ pipeline {
           }
           stage('Test') {
               steps {
-                    bat 'docker exec prototype-project-back-php-1 php artisan test --testsuite=Feature'
+                    bat 'docker exec prototype-project-back_php_1 php artisan test --testsuite=Feature'
               }
           }
           stage('End') {

@@ -28,8 +28,8 @@ class AuthenticationTest extends DuskTestCase
                 ->type('loginEmail', 'Tester')
                 ->type('loginPassword', 'Tester')
                 ->press('Login')
-                ->waitForText('Login Failed!!')
-                ->assertSee('Login Failed!!')
+                ->waitForText('Incorrect username or password.')
+                ->assertSee('Incorrect username or password.')
                 // ->assertDialogOpened('Login Failed!!')
                 ->pause(3000);
         });
