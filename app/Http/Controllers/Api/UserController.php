@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name', 'asc')->get();
+        $users = User::where('role', '=', 'PLAYER')->orderBy('name', 'asc')->get();
         return $users;
     }
 

@@ -14,7 +14,7 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 15; $i++) {
+        for ($i = 1; $i < 17; $i++) {
             if ($i % 3 === 0) {
                 Image::factory()->create([
                     'user_id' => $i,
