@@ -36,7 +36,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(['error' => 'Incorrect username or password.'], 422);
         }
 
         if (! $token = JWTAuth::attempt($validator->validated())) {
